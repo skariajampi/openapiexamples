@@ -1,0 +1,91 @@
+---
+openapi: 3.0.0
+info:
+  title: Customer API
+  description: Customer API
+  termsOfService: http://terms_of_service1
+  contact:
+    name: AA
+    email: aa@aa.com
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/SKARIAJAMPI_1/Customer_API/1.0.0
+  description: SwaggerHub API Auto Mocking
+paths:
+  /customers:
+    get:
+      description: gets info about 1 or more customers
+      parameters:
+      - name: limit
+        in: query
+        description: number of customers returned
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 10
+          minimum: 1
+          type: integer
+          example: 5
+      - name: pageLimit
+        in: query
+        description: number of customers returned
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 10
+          minimum: 1
+          type: integer
+          example: 5
+      responses:
+        "200":
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customers'
+    post:
+      description: post operation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+        required: true
+      responses:
+        "200":
+          description: Successfully created new customer
+  /customers/{id}:
+    get:
+      description: get a specific customer
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: success in getting customer info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+components:
+  schemas:
+    Customer:
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        nickName:
+          type: string
+      description: get a specific customer
+    Customers:
+      type: array
+      items:
+        $ref: '#/components/schemas/Customer'
